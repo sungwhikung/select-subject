@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>논산대건고등학교 선택과목 수강신청</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap">
   <link rel="stylesheet" href="style.css">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
@@ -15,7 +18,7 @@
   <!-- 1. 로그인 -->
   <main id="sc-login" class="screen center active">
     <div class="login-card">
-      <p class="eyebrow">NONSAN DAEGEON HIGH SCHOOL</p>
+      <p class="eyebrow">논산대건고등학교</p>
       <h1>선택과목 수강신청</h1>
       <p class="muted">학교에서 받은 구글 계정으로 로그인해 주세요.</p>
       <div id="g-btn" class="g-btn"><span class="spinner"></span></div>
@@ -35,7 +38,7 @@
         <strong data-who></strong>
         <button type="button" class="btn-ghost" data-action="logout">로그아웃</button>
       </div>
-      <div class="card-grid three">
+      <div class="card-grid">
         <button type="button" class="pick-card" data-action="open-2025">
           <span class="badge gray">조회 전용</span>
           <strong>2025학년도 입학생</strong>
@@ -64,7 +67,7 @@
         <p class="muted" data-who></p>
       </header>
       <div id="menu-status" class="notice"></div>
-      <div class="card-grid two">
+      <div class="card-grid">
         <button type="button" class="pick-card primary" data-action="open-select">
           <strong>과목 고르고 제출하기</strong>
           <span class="muted">학기별로 과목을 고르면 학점이 자동으로 계산돼요.</span>

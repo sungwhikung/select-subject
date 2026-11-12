@@ -743,7 +743,7 @@
       $$('[data-preset]').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-preset') === state.preset); });
       var note = $('#preset-note');
       note.hidden = !state.preset;
-      note.textContent = state.preset ? PRESETS[state.preset].note + ' 추천 과목은 금색 테두리로 표시돼요.' : '';
+      note.textContent = state.preset ? PRESETS[state.preset].note + ' 해당 과목에는 "추천" 표시가 붙어요.' : '';
       return render();
     }
 
