@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>논산대건고등학교 선택과목 수강신청</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+
+<body>
+
+  <!-- 1. 로그인 -->
+  <main id="sc-login" class="screen center active">
+    <div class="login-card">
+      <p class="eyebrow">NONSAN DAEGEON HIGH SCHOOL</p>
+      <h1>선택과목 수강신청</h1>
+      <p class="muted">학교에서 받은 구글 계정으로 로그인해 주세요.</p>
+      <div id="g-btn" class="g-btn"><span class="spinner"></span></div>
+      <p id="login-domain" class="hint"></p>
+      <p id="login-status" class="status" role="status"></p>
+    </div>
+  </main>
+
+  <!-- 2. 입학연도 선택 -->
+  <main id="sc-portal" class="screen center">
+    <div class="narrow">
+      <header class="page-head">
+        <h1>선택과목 수강신청</h1>
+        <p class="muted">입학한 연도를 골라 주세요.</p>
+      </header>
+      <div class="who-bar">
+        <strong data-who></strong>
+        <button type="button" class="btn-ghost" data-action="logout">로그아웃</button>
+      </div>
+      <div class="card-grid three">
+        <button type="button" class="pick-card" data-action="open-2025">
+          <span class="badge gray">조회 전용</span>
+          <strong>2025학년도 입학생</strong>
+          <span class="muted">기존 사이트로 이동해서 확정된 선택과목을 확인해요.</span>
+        </button>
+        <button type="button" class="pick-card primary" data-action="go" data-screen="sc-menu">
+          <span class="badge blue" id="portal-badge">과목 선택</span>
+          <strong>2026학년도 입학생</strong>
+          <span class="muted">2~3학년에 들을 과목을 고르고 제출해요.</span>
+        </button>
+        <button type="button" class="pick-card" disabled>
+          <span class="badge amber">준비 중</span>
+          <strong>2027학년도 입학생</strong>
+          <span class="muted">아직 열리지 않았어요.</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- 3. 2026 메뉴 -->
+  <main id="sc-menu" class="screen center">
+    <div class="narrow">
+      <button type="button" class="btn-ghost" data-action="go" data-screen="sc-portal">← 입학연도 선택</button>
+      <header class="page-head">
+        <h1>2026학년도 입학생</h1>
+        <p class="muted" data-who></p>
+      </header>
+      <div id="menu-status" class="notice"></div>
+      <div class="card-grid two">
+        <button type="button" class="pick-card primary" data-action="open-select">
+          <strong>과목 고르고 제출하기</strong>
+          <span class="muted">학기별로 과목을 고르면 학점이 자동으로 계산돼요.</span>
+        </button>
+        <button type="button" class="pick-card" data-action="open-check">
+          <strong>제출한 내용 확인하기</strong>
+          <span class="muted">서버에 저장된 내 선택과목을 보고 인쇄해요.</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- 4. 과목 선택 -->
+  <main id="sc-select" class="screen">
+    <div class="wrap">
+      <div class="top-bar no-print">
+        <button type="button" class="btn-ghost" data-action="go" data-screen="sc-menu">← 메뉴</button>
+        <strong data-who-short></strong>
+      </div>
+
+      <section class="panel no-print">
+        <label class="career">
+          <span>희망 진로</span>
+          <input type="text" id="career" maxlength="40" placeholder="예: AI 개발자, 간호사, 초등교사">
+        </label>
+        <div class="presets">
+          <span class="muted">계열별 추천 과목 표시</span>
+          <button type="button" class="chip" data-preset="medical">의학·생명</button>
+          <button type="button" class="chip" data-preset="engineering">이공</button>
+          <button type="button" class="chip" data-preset="humanities">인문·사회</button>
+          <button type="button" class="chip" data-preset="edu">사범·교육</button>
+        </div>
+        <p id="preset-note" class="preset-note" hidden></p>
+      </section>
+
+      <section class="dash no-print" aria-label="학점 현황">
+        <div class="dash-main">
+          <div><span>지정</span><b id="d-fixed">0</b></div>
+          <i>+</i>
+          <div><span>선택</span><b id="d-select">0</b></div>
+          <i>=</i>
+          <div class="total"><span>합계 (목표 <em id="d-goal"></em>)</span><b id="d-total">0</b></div>
+        </div>
+        <div class="dash-sub">
+          <div id="d-kms-box"><span>국·수·영 <small id="d-kms-rule"></small></span><b id="d-kms">0</b></div>
+          <div><span>사회</span><b id="d-soc">0</b></div>
+          <div><span>과학</span><b id="d-sci">0</b></div>
+          <div><span>예술</span><b id="d-art">0</b></div>
+          <div><span>체육</span><b id="d-pe">0</b></div>
+          <div id="d-lib-box"><span>교양 <small id="d-lib-rule"></small></span><b id="d-lib">0</b></div>
+        </div>
+      </section>
+
+      <nav id="tabs" class="tabs no-print" role="tablist"></nav>
+      <div id="panes"></div>
+
+      <!-- 최종 확인·제출 -->
+      <section id="pane-final" class="pane" hidden>
+        <div id="checklist" class="checklist no-print"></div>
+
+        <article id="report" class="report"></article>
+
+        <div class="panel submit-box no-print">
+          <div class="btn-row">
+            <button type="button" class="btn" data-action="excel">엑셀로 저장</button>
+            <button type="button" class="btn" data-action="image">이미지로 저장</button>
+            <button type="button" class="btn" data-action="print">인쇄 / PDF</button>
+          </div>
+          <button type="button" id="btn-submit" class="btn-primary" data-action="submit">제출하기</button>
+          <p id="submit-status" class="status" role="status"></p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- 5. 제출 내역 확인 -->
+  <main id="sc-check" class="screen">
+    <div class="wrap">
+      <div class="top-bar no-print">
+        <button type="button" class="btn-ghost" data-action="go" data-screen="sc-menu">← 메뉴</button>
+        <strong data-who-short></strong>
+      </div>
+      <div id="check-body"></div>
+      <div class="btn-row no-print" id="check-actions" hidden>
+        <button type="button" class="btn" data-action="print">인쇄 / PDF</button>
+        <button type="button" class="btn" data-action="open-select">과목 수정하러 가기</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- 로그인 만료 시 다시 로그인 -->
+  <div id="relogin" class="overlay" hidden>
+    <div class="login-card">
+      <h2>다시 로그인해 주세요</h2>
+      <p class="muted">로그인한 지 오래돼서 연결이 끊겼어요.<br>고른 과목은 그대로 남아 있어요.</p>
+      <div id="g-btn-2" class="g-btn"></div>
+      <p id="relogin-status" class="status" role="status"></p>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <script src="config.js"></script>
+  <script src="curriculum.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
