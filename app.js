@@ -442,14 +442,13 @@
           el('span', { class: 'count', 'data-count': g.id })));
         var grid = el('div', { class: 'subj-grid' });
         g.list.forEach(function (item) {
-          var need = C.prerequisites[item.n];
           grid.appendChild(el('button', {
             type: 'button', class: 'subj area-' + item.g, 'aria-pressed': 'false',
             'data-group': g.id, 'data-name': item.n
           },
             el('span', { class: 'subj-name', text: item.n }),
             el('span', { class: 'subj-meta', text: AREA[item.g] + ' · ' + item.c + '학점 · ' + item.t }),
-            el('span', { class: 'subj-note', 'data-default': need ? need + ' 선행 이수 필요' : '' })));
+            el('span', { class: 'subj-note' })));
         });
         pane.appendChild(grid);
       });
@@ -496,8 +495,11 @@
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
       btn.classList.toggle('blocked', !!why);
       btn.classList.toggle('recommended', preset.indexOf(name) > -1);
+      // 안내 문구: 선택할 수 없으면 그 이유를, 선행 과목을 이미 선택했으면 선택 가능하다는 것을 알려 줘요
       var note = $('.subj-note', btn);
-      note.textContent = why || note.getAttribute('data-default');
+      var need = C.prerequisites[name];
+      note.textContent = why || (need ? '선행 과목 ' + need + ' 선택 완료' : '');
+      note.classList.toggle('ok', !why && !!need);
     });
 
     // 영역별 개수, 탭 표시

@@ -251,7 +251,8 @@ button:focus-visible, input:focus-visible { outline: 3px solid rgba(43, 127, 255
 .subj-name { font-weight: 700; font-size: 1rem; line-height: 1.35; letter-spacing: -.01em; }
 .subj-meta { display: flex; align-items: center; gap: 6px; font-size: .8rem; color: var(--ink-soft); }
 .subj-meta::before { content: ''; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--dot, var(--etc)); }
-.subj-note { font-size: .78rem; font-weight: 600; color: var(--no); }
+.subj-note { font-size: .78rem; font-weight: 600; color: #b47a00; }
+.subj-note.ok { color: var(--ok); }
 .subj-note:empty { display: none; }
 .subj::after {
   content: ''; position: absolute; right: 14px; top: 14px;
