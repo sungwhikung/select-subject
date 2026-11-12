@@ -41,7 +41,7 @@ const CONFIG = {
 };
 
 // 배포된 코드가 어느 버전인지 확인하는 표시예요. 코드를 고칠 때마다 올려요.
-const BUILD = '2026-11-12b';
+const BUILD = '2026-11-12c';
 
 // <CURRICULUM> — 이 블록은 사이트의 curriculum.js 와 내용이 같아야 해요.
 const CURRICULUM = {
@@ -545,10 +545,10 @@ function validateSelections_(raw) {
         if (names.indexOf(item[0]) > -1) picked.push(item);
       });
       if (picked.length !== names.length) errors.push(where + ': 목록에 없는 과목이 들어 있어요.');
-      if (picked.length > g.limit) errors.push(where + ': 최대 ' + g.limit + '과목까지 고를 수 있어요.');
-      if (picked.length < g.limit) errors.push(where + ': ' + g.limit + '과목을 골라야 해요. (현재 ' + picked.length + '과목)');
+      if (picked.length > g.limit) errors.push(where + ': 최대 ' + g.limit + '과목까지 선택할 수 있어요.');
+      if (picked.length < g.limit) errors.push(where + ': ' + g.limit + '과목을 선택해야 해요. (현재 ' + picked.length + '과목)');
       picked.forEach(function (item) {
-        if (item[0] in pickedAt) errors.push(item[0] + ': 같은 과목은 한 번만 고를 수 있어요.');
+        if (item[0] in pickedAt) errors.push(item[0] + ': 같은 과목은 한 번만 선택할 수 있어요.');
         else pickedAt[item[0]] = si;
         add(item[1], item[2]);
       });
@@ -560,7 +560,7 @@ function validateSelections_(raw) {
     if (!(name in pickedAt)) return;
     const need = CURRICULUM.prerequisites[name];
     if (!(need in pickedAt) || pickedAt[need] >= pickedAt[name]) {
-      errors.push(name + ': ' + need + '을(를) 더 앞 학기에 먼저 골라야 해요.');
+      errors.push(name + ': 이전 학기에 ' + need + '을(를) 선행 이수해야 해요.');
     }
   });
 

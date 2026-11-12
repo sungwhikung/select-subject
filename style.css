@@ -57,12 +57,13 @@ button:focus-visible, input:focus-visible { outline: 3px solid rgba(43, 127, 255
 /* ── 화면 틀 ────────────────────────────── */
 .screen { display: none; }
 .screen.active { display: block; }
-.screen.center.active { display: flex; min-height: 100vh; align-items: flex-start; justify-content: center; padding: 11vh 20px 40px; }
+.screen.center.active { display: flex; min-height: 100vh; align-items: flex-start; justify-content: center; padding: 9vh 20px 40px; }
+#sc-login.active { align-items: center; padding-top: 40px; }
 
 .wrap { max-width: 1040px; margin: 0 auto; padding: 20px 20px 80px; }
 .narrow { width: 100%; max-width: 560px; }
 
-.page-head { margin: 16px 0 22px; }
+.page-head { margin: 16px 4px 20px; }
 .page-head h1 { font-size: 1.9rem; font-weight: 800; letter-spacing: -.03em; line-height: 1.25; }
 .page-head .muted { margin-top: 6px; font-size: 1rem; }
 
@@ -71,7 +72,12 @@ button:focus-visible, input:focus-visible { outline: 3px solid rgba(43, 127, 255
 .login-card h1 { font-size: 1.9rem; font-weight: 800; letter-spacing: -.03em; line-height: 1.25; margin: 8px 0 10px; }
 .login-card h2 { font-size: 1.3rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: 8px; }
 .eyebrow { display: inline-block; font-size: .8rem; font-weight: 700; color: var(--accent); background: var(--accent-tint); padding: 4px 10px; border-radius: 8px; }
-.g-btn { min-height: 44px; display: flex; align-items: center; margin: 28px 0 12px; }
+.login-card { text-align: center; }
+.login-card > .muted { font-size: 1rem; }
+.login-box { margin-top: 28px; padding: 22px 16px 18px; background: var(--bg); border-radius: 16px; }
+.login-label { font-size: .92rem; font-weight: 700; margin-bottom: 14px; }
+.g-btn { min-height: 44px; display: flex; align-items: center; justify-content: center; margin: 0 0 12px; }
+.overlay .g-btn { margin-top: 22px; }
 .hint { font-size: .84rem; color: var(--ink-faint); }
 
 .status { min-height: 1.4em; margin-top: 12px; font-size: .92rem; white-space: pre-line; }
@@ -86,7 +92,8 @@ button:focus-visible, input:focus-visible { outline: 3px solid rgba(43, 127, 255
 
 /* ── 공통 부품 ──────────────────────────── */
 .who-bar, .top-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.who-bar { font-size: .9rem; color: var(--ink-soft); margin-bottom: 14px; }
+.who-bar { font-size: .9rem; color: var(--ink-soft); margin-bottom: 28px; background: var(--card); border-radius: 14px; padding: 10px 10px 10px 18px; }
+.btn.small { padding: 8px 14px; font-size: .86rem; flex: none; }
 .who-bar strong { font-weight: 500; overflow-wrap: anywhere; }
 .top-bar { margin-bottom: 14px; font-size: .92rem; }
 .top-bar strong { font-weight: 700; }

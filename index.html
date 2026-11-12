@@ -17,9 +17,12 @@
     <div class="login-card">
       <p class="eyebrow">논산대건고등학교</p>
       <h1>선택과목 수강신청</h1>
-      <p class="muted">학교에서 받은 구글 계정으로 로그인해 주세요.</p>
-      <div id="g-btn" class="g-btn"><span class="spinner"></span></div>
-      <p id="login-domain" class="hint"></p>
+      <p class="muted">2~3학년 선택과목을 신청하는 곳이에요.</p>
+      <div class="login-box">
+        <p class="login-label">학교 구글 계정으로 로그인해 주세요</p>
+        <div id="g-btn" class="g-btn"><span class="spinner"></span></div>
+        <p id="login-domain" class="hint"></p>
+      </div>
       <p id="login-status" class="status" role="status"></p>
     </div>
   </main>
@@ -27,14 +30,14 @@
   <!-- 2. 입학연도 선택 -->
   <main id="sc-portal" class="screen center">
     <div class="narrow">
-      <header class="page-head">
-        <h1>선택과목 수강신청</h1>
-        <p class="muted">입학한 연도를 골라 주세요.</p>
-      </header>
       <div class="who-bar">
         <strong data-who></strong>
-        <button type="button" class="btn-ghost" data-action="logout">로그아웃</button>
+        <button type="button" class="btn small" data-action="logout">로그아웃</button>
       </div>
+      <header class="page-head">
+        <h1>선택과목 수강신청</h1>
+        <p class="muted">입학 연도를 선택해 주세요.</p>
+      </header>
       <div class="card-grid">
         <button type="button" class="pick-card" data-action="open-2025">
           <span class="badge gray">조회 전용</span>
@@ -44,7 +47,7 @@
         <button type="button" class="pick-card primary" data-action="go" data-screen="sc-menu">
           <span class="badge blue" id="portal-badge">과목 선택</span>
           <strong>2026학년도 입학생</strong>
-          <span class="muted">2~3학년에 들을 과목을 고르고 제출해요.</span>
+          <span class="muted">2~3학년에 이수할 과목을 선택하고 제출해요.</span>
         </button>
         <button type="button" class="pick-card" disabled>
           <span class="badge amber">준비 중</span>
@@ -66,11 +69,11 @@
       <div id="menu-status" class="notice"></div>
       <div class="card-grid">
         <button type="button" class="pick-card primary" data-action="open-select">
-          <strong>과목 고르고 제출하기</strong>
-          <span class="muted">학기별로 과목을 고르면 학점이 자동으로 계산돼요.</span>
+          <strong>과목 선택 및 제출</strong>
+          <span class="muted">학기별로 과목을 선택하면 학점이 자동으로 계산돼요.</span>
         </button>
         <button type="button" class="pick-card" data-action="open-check">
-          <strong>제출한 내용 확인하기</strong>
+          <strong>제출 내역 확인</strong>
           <span class="muted">서버에 저장된 내 선택과목을 보고 인쇄해요.</span>
         </button>
       </div>
@@ -159,7 +162,7 @@
   <div id="relogin" class="overlay" hidden>
     <div class="login-card">
       <h2>다시 로그인해 주세요</h2>
-      <p class="muted">로그인한 지 오래돼서 연결이 끊겼어요.<br>고른 과목은 그대로 남아 있어요.</p>
+      <p class="muted relogin-text">로그인한 지 오래돼서 연결이 끊겼어요.<br>선택한 과목은 그대로 남아 있어요.</p>
       <div id="g-btn-2" class="g-btn"></div>
       <p id="relogin-status" class="status" role="status"></p>
     </div>

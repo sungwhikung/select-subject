@@ -58,7 +58,7 @@
   var PRESETS = {
     medical: {
       list: ['화학', '생명과학', '세포와 물질대사', '화학 반응의 세계', '보건', '생물의 유전'],
-      note: '의학·보건 계열에서 많이 보는 과목이에요. 2학년에 화학·생명과학을 먼저 듣고 3학년에 심화 과목으로 이어 가는 걸 권해요.'
+      note: '의학·보건 계열에서 많이 보는 과목이에요. 2학년에 화학·생명과학을 이수한 뒤 3학년에 심화 과목으로 이어 가는 것을 권장해요.'
     },
     engineering: {
       list: ['물리학', '화학', '역학과 에너지', '인공지능 수학', '프로그래밍', '미적분 II', '기하', '전자기와 양자'],
@@ -142,11 +142,11 @@
   /** 이 과목을 지금 고를 수 없는 이유 (고를 수 있으면 '') */
   function blockReason(group, name, at) {
     if (name in at && at[name] !== group.sem.index) {
-      return SEMS[at[name]].short + '학기에서 이미 골랐어요';
+      return SEMS[at[name]].short + '학기에서 이미 선택했어요';
     }
     var need = C.prerequisites[name];
     if (need && !(need in at && at[need] < group.sem.index)) {
-      return need + eul(need) + ' 더 앞 학기에 먼저 골라야 해요';
+      return '이전 학기에 ' + need + eul(need) + ' 선행 이수해야 해요';
     }
     return '';
   }
@@ -179,12 +179,12 @@
     if (i > -1) {
       list.splice(i, 1);
       var dropped = dropOrphans();
-      if (dropped.length) toast(name + eul(name) + ' 빼서 ' + dropped.join(', ') + '도 함께 빠졌어요.');
+      if (dropped.length) toast(name + ' 선택을 취소해서, ' + name + eul(name) + ' 선행 이수해야 하는 ' + dropped.join(', ') + '도 함께 취소됐어요.');
     } else {
       var why = blockReason(group, name, pickedAt(state.sel));
       if (why) return toast(name + ': ' + why + '.');
       if (list.length >= group.limit) {
-        if (group.limit > 1) return toast('이 영역은 ' + group.limit + '과목까지 고를 수 있어요. 다른 과목을 먼저 빼 주세요.');
+        if (group.limit > 1) return toast('이 영역은 ' + group.limit + '과목까지 선택할 수 있어요. 다른 과목의 선택을 먼저 취소해 주세요.');
         list.length = 0;          // 1과목만 고르는 영역은 바로 바꿔 줘요
       }
       list.push(name);
@@ -220,7 +220,7 @@
     var out = [];
     GROUPS.forEach(function (g) {
       var lack = g.limit - sel[g.id].length;
-      if (lack > 0) out.push({ tab: g.sem.id, text: g.sem.label + ' ' + g.name + ': ' + lack + '과목을 더 골라야 해요.' });
+      if (lack > 0) out.push({ tab: g.sem.id, text: g.sem.label + ' ' + g.name + ': ' + lack + '과목을 더 선택해야 해요.' });
     });
     var s = stats(sel);
     if (s.kms > C.maxKms) out.push({ text: '국어·수학·영어 합계가 ' + s.kms + '학점이에요. ' + C.maxKms + '학점 이하로 줄여야 해요.' });
@@ -401,7 +401,7 @@
     box.textContent = st.open
       ? '지금 제출할 수 있어요.' + (st.until ? ' (마감: ' + st.until + ')' : '') +
         (state.submitted ? ' 마지막 제출: ' + state.submitted.timestamp : ' 아직 제출하지 않았어요.')
-      : st.message + ' 과목을 골라 보거나 제출한 내용을 확인하는 것은 할 수 있어요.';
+      : st.message + ' 과목을 미리 선택해 보거나 제출한 내용을 확인할 수는 있어요.';
     var badge = $('#portal-badge');
     badge.textContent = st.open ? '제출 받는 중' : '제출 마감';
     badge.className = 'badge ' + (st.open ? 'blue' : 'gray');
@@ -449,7 +449,7 @@
           },
             el('span', { class: 'subj-name', text: item.n }),
             el('span', { class: 'subj-meta', text: AREA[item.g] + ' · ' + item.c + '학점 · ' + item.t }),
-            el('span', { class: 'subj-note', 'data-default': need ? need + ' 먼저 이수' : '' })));
+            el('span', { class: 'subj-note', 'data-default': need ? need + ' 선행 이수 필요' : '' })));
         });
         pane.appendChild(grid);
       });
@@ -457,7 +457,7 @@
       var prev = SEMS[sem.index - 1];
       var next = SEMS[sem.index + 1];
       pane.appendChild(el('div', { class: 'pane-foot' },
-        el('button', { type: 'button', class: 'btn-ghost danger', 'data-reset': sem.id, text: '이 학기 선택 지우기' }),
+        el('button', { type: 'button', class: 'btn-ghost danger', 'data-reset': sem.id, text: '이 학기 선택 초기화' }),
         el('span', { class: 'grow' }),
         prev ? el('button', { type: 'button', class: 'btn', 'data-tab': prev.id, text: '← ' + prev.short }) : null,
         el('button', { type: 'button', class: 'btn-primary small', 'data-tab': next ? next.id : 'final', text: next ? next.short + ' →' : '확인·제출 →' })));
@@ -537,7 +537,7 @@
       var ul = el('ul', {});
       probs.forEach(function (p) {
         ul.appendChild(el('li', {}, p.text + ' ',
-          p.tab ? el('button', { type: 'button', class: 'link', 'data-tab': p.tab, text: '고르러 가기' }) : null));
+          p.tab ? el('button', { type: 'button', class: 'link', 'data-tab': p.tab, text: '선택하러 가기' }) : null));
       });
       box.appendChild(el('div', { class: 'notice warn' }, el('strong', { text: '제출하려면 아래 내용을 채워야 해요.' }), ul));
     } else if (!state.submitted) {
@@ -728,13 +728,13 @@
     if (t.hasAttribute('data-reset')) {
       var sem = SEMS.filter(function (s) { return s.id === t.getAttribute('data-reset'); })[0];
       var had = sem.groups.some(function (g) { return state.sel[g.id].length; });
-      if (!had) return toast('이 학기에는 고른 과목이 없어요.');
-      if (!confirm(sem.label + '에서 고른 과목을 모두 지울까요?')) return;
+      if (!had) return toast('이 학기에는 선택한 과목이 없어요.');
+      if (!confirm(sem.label + '에서 선택한 과목을 모두 초기화할까요?')) return;
       sem.groups.forEach(function (g) { state.sel[g.id] = []; });
       var dropped = dropOrphans();
       saveDraft();
       render();
-      return toast(sem.label + ' 선택을 지웠어요.' + (dropped.length ? ' 선이수가 필요한 ' + dropped.join(', ') + '도 함께 빠졌어요.' : ''));
+      return toast(sem.label + ' 선택을 초기화했어요.' + (dropped.length ? ' 선행 이수가 필요한 ' + dropped.join(', ') + '도 함께 취소됐어요.' : ''));
     }
 
     if (t.hasAttribute('data-preset')) {
