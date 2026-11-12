@@ -7,7 +7,7 @@ const APP_CONFIG = {
   GAS_URL: 'https://script.google.com/macros/s/AKfycbxcRYPXYfpvgw41i6rCESlWhElu-O632G7r1HIe5ySwHBXsOpe5U4RdlrJYHX82poMk/exec',
 
   // 구글 로그인 클라이언트 ID (apps-script/Code.gs 의 CLIENT_ID 와 같아야 해요)
-  CLIENT_ID: '209856790601-foujcjpmor0acnsu4iv7avev4hj0jj0n.apps.googleusercontent.com',
+  CLIENT_ID: '132908628137-396mibqkfq8h1pfbcu56nggbkbt5968i.apps.googleusercontent.com',
 
   // 로그인할 수 있는 학교 계정 도메인
   SCHOOL_DOMAIN: 'pess.cnehs.kr',

@@ -25,7 +25,7 @@ const CONFIG = {
   SPREADSHEET_ID: '',
 
   // 구글 로그인 클라이언트 ID — 사이트의 config.js 와 같은 값이어야 해요.
-  CLIENT_ID: '209856790601-foujcjpmor0acnsu4iv7avev4hj0jj0n.apps.googleusercontent.com',
+  CLIENT_ID: '132908628137-396mibqkfq8h1pfbcu56nggbkbt5968i.apps.googleusercontent.com',
   SCHOOL_DOMAIN: 'pess.cnehs.kr',
 
   SHEET_DB: '학번DB',
