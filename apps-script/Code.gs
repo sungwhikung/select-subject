@@ -40,6 +40,9 @@ const CONFIG = {
   TIMEZONE: 'Asia/Seoul'
 };
 
+// 배포된 코드가 어느 버전인지 확인하는 표시예요. 코드를 고칠 때마다 올려요.
+const BUILD = '2026-11-12b';
+
 // <CURRICULUM> — 이 블록은 사이트의 curriculum.js 와 내용이 같아야 해요.
 const CURRICULUM = {
   totalCredits: 174, // 총 이수 학점 (정확히 이 값이어야 제출 가능)
@@ -316,7 +319,8 @@ function route_(p) {
   const ss = book_();
   const action = String(p.action);
 
-  if (action === 'status') return { ok: true, status: getStatus_(ss) };
+  // clientId 는 공개 값이에요. 배포된 버전이 사이트와 같은 설정인지 확인하는 데 써요.
+  if (action === 'status') return { ok: true, status: getStatus_(ss), build: BUILD, clientId: CONFIG.CLIENT_ID };
 
   const auth = verifyToken_(p.token);
   if (!auth.ok) return auth;
@@ -377,7 +381,9 @@ function verifyToken_(token) {
     return { ok: false, code: 'AUTH', message: '로그인 확인 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요.' };
   }
 
-  if (d.aud !== CONFIG.CLIENT_ID) return expired;
+  if (d.aud !== CONFIG.CLIENT_ID) {
+    return { ok: false, code: 'AUTH_CONFIG', message: '서버 설정 문제로 로그인할 수 없어요. (Apps Script 의 CLIENT_ID 가 사이트와 달라요. 담당 선생님께 알려 주세요)' };
+  }
   if (d.email_verified !== 'true' && d.email_verified !== true) return expired;
   const email = String(d.email || '').toLowerCase();
   if (!email || email.slice(-(CONFIG.SCHOOL_DOMAIN.length + 1)) !== '@' + CONFIG.SCHOOL_DOMAIN) {
